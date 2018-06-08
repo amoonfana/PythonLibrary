@@ -1,0 +1,67 @@
+\documentclass{sig-alternate}
+\usepackage{subfigure,algorithm,algorithmicx,algpseudocode}
+
+\renewcommand{\algorithmicrequire}{\textbf{Input:}}
+\renewcommand{\algorithmicensure}{\textbf{Output:}}
+
+\begin{document}
+
+\title{Functions of Linear Regression}
+
+\numberofauthors{1}
+\author{
+	% 1st. author
+	\alignauthor
+	Xueyuan Gong\\
+	\affaddr{Department of Computer and Information Science}\\
+	\affaddr{Faculty of Science and Technology}\\
+    \affaddr{University of Macau}\\
+    \affaddr{Macau, China}\\
+    \email{\{yb47453\}@umac.mo}
+}
+
+\maketitle
+
+Given a data set $X=\{X^{i}_{j}|X^{i}_{j}\in \mathbb{R}^{n\times (m-1)}\}$ and a label set $Y=\{Y^{i}|Y^{i}\in \mathbb{R}^{n\times 1}\}$, where $1\leq i\leq n$ and $2\leq j \leq m$. For all $X^{i}$, insert $X^{i}_{1}=1$ so that $X^{i}_{j}\in \mathbb{R}^{n\times m}$. Initialize weight matrix $W=\{W_{j}|W_{j}\in \mathbb{R}^{1\times m}\}$.
+
+Hypothesis function is defined in Equation \eqref{eq:hf}.
+
+\begin{equation}
+\label{eq:hf}
+	H(X^{i})=\sum_{j=1}^{m}W_{j}X^{i}_{j}
+\end{equation}
+
+Cost function is defined in Equation \eqref{eq:cf}.
+
+\begin{equation}
+\label{eq:cf}
+	C(X^{i})=H(X^{i})-Y^{i}
+\end{equation}
+
+Objective function is defined in Equation \eqref{eq:of}.
+
+\begin{equation}
+\label{eq:of}
+	\begin{aligned}
+	J(W)&=\frac{1}{2n}\sum_{i=1}^{n}C^2(X^{i})\\
+		&=\frac{1}{2n}\sum_{i=1}^{n}(\sum_{j=1}^{m}W_{j}X^{i}_{j}-Y^{i})^{2}
+	\end{aligned}
+\end{equation}
+
+The partial derivative of $J(W)$ with respect to $W_{j}$ is given as follows:
+
+\begin{align*}
+	\frac{\partial{J(W)}}{\partial{W_{j}}}
+	&=\frac{1}{2n}\sum_{i=1}^{n}\frac{\partial{C^2(X^{i})}}{\partial{W_{j}}}\\
+	&=\frac{1}{2n}\sum_{i=1}^{n}\frac{\partial{C^2(X^{i})}}{\partial{C(X^{i})}}\cdot \frac{\partial{C(X^{i})}}{\partial{H(X^{i})}}\cdot \frac{\partial{H(X^{i})}}{\partial{W_{j}}}\\
+	&=\frac{1}{2n}\sum_{i=1}^{n}2C(X^{i})\cdot 1\cdot X^{i}_{j}\\
+	&=\frac{1}{n}\sum_{i=1}^{n}(H(X^{i})-Y^{i})X^{i}_{j}
+\end{align*}
+
+Thus, for all $W_{j}$, the update function is given as follows:
+
+\begin{align*}
+	W_{j}=W_{j}-\frac{1}{n}\sum_{i=1}^{n}(H(X^{i})-Y^{i})X^{i}_{j}
+\end{align*}
+
+\end{document}
