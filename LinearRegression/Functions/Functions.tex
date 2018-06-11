@@ -31,17 +31,17 @@ Hypothesis function is defined in Equation \eqref{eq:hf}.
 	H(X^{i})=\sum_{j=1}^{m}W_{j}X^{i}_{j}
 \end{equation}
 
+Loss function is defined in Equation \eqref{eq:lf}.
+
+\begin{equation}
+\label{eq:lf}
+	C(X^{i})=H(X^{i})-Y^{i}
+\end{equation}
+
 Cost function is defined in Equation \eqref{eq:cf}.
 
 \begin{equation}
 \label{eq:cf}
-	C(X^{i})=H(X^{i})-Y^{i}
-\end{equation}
-
-Objective function is defined in Equation \eqref{eq:of}.
-
-\begin{equation}
-\label{eq:of}
 	\begin{aligned}
 	J(W)&=\frac{1}{2n}\sum_{i=1}^{n}C^2(X^{i})\\
 		&=\frac{1}{2n}\sum_{i=1}^{n}(\sum_{j=1}^{m}W_{j}X^{i}_{j}-Y^{i})^{2}

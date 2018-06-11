@@ -1,10 +1,4 @@
 # -*- coding: utf-8 -*-
-"""
-Created on Wed May 10 22:11:09 2017
-
-@author: Vera
-"""
-
 from tensorflow.examples.tutorials.mnist import input_data
 import tensorflow as tf
 
