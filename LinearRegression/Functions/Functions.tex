@@ -61,7 +61,8 @@ The partial derivative of $J(W)$ with respect to $W_{j}$ is given as follows:
 Thus, for all $W_{j}$, the update function is given as follows:
 
 \begin{align*}
-	W_{j}=W_{j}-\frac{1}{n}\sum_{i=1}^{n}(H(X^{i})-Y^{i})X^{i}_{j}
+	W_{j}=W_{j}-\frac{\lambda}{n}\sum_{i=1}^{n}(H(X^{i})-Y^{i})X^{i}_{j}
 \end{align*}
+where $\lambda$ is the learning rate given by users.
 
 \end{document}

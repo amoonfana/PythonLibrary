@@ -1,0 +1,94 @@
+\documentclass{sig-alternate}
+\usepackage{subfigure,algorithm,algorithmicx,algpseudocode}
+
+\renewcommand{\algorithmicrequire}{\textbf{Input:}}
+\renewcommand{\algorithmicensure}{\textbf{Output:}}
+
+\begin{document}
+
+\title{Functions of Logistic Regression}
+
+\numberofauthors{1}
+\author{
+	% 1st. author
+	\alignauthor
+	Xueyuan Gong\\
+	\affaddr{Department of Computer and Information Science}\\
+	\affaddr{Faculty of Science and Technology}\\
+    \affaddr{University of Macau}\\
+    \affaddr{Macau, China}\\
+    \email{\{yb47453\}@umac.mo}
+}
+
+\maketitle
+
+Given a data set $X=\{X^{i}_{j}|X^{i}_{j}\in \mathbb{R}^{n\times (m-1)}\}$ and a label set $Y=\{Y^{i}|Y^{i}\in \mathbb{R}^{n\times 1}\}$, where $1\leq i\leq n$ and $2\leq j \leq m$. For all $X^{i}$, insert $X^{i}_{1}=1$ so that $X^{i}_{j}\in \mathbb{R}^{n\times m}$. Initialize weight matrix $W=\{W_{j}|W_{j}\in \mathbb{R}^{1\times m}\}$.
+
+We define the linear function in Equation \eqref{eq:lnf}.
+
+\begin{equation}
+\label{eq:lnf}
+	Z^{i}=\sum_{j=1}^{m}W_{j}X^{i}_{j}
+\end{equation}
+
+We define activation function as sigmoid function and thus the hypothesis function is given in Equation \eqref{eq:hf}.
+
+\begin{equation}
+\label{eq:hf}
+	H(X^{i}) = G(Z^{i})=\frac{1}{1+e^{-Z^{i}}}
+\end{equation}
+
+Loss function is defined in Equation \eqref{eq:lsf}.
+
+\begin{equation}
+\label{eq:lsf}
+	C(X^{i})=-Y^{i}\log{(H(X^{i}))}-(1-Y^{i})\log{(1-H(X^{i}))}
+\end{equation}
+
+Cost function is defined in Equation \eqref{eq:cf}.
+
+\begin{equation}
+\label{eq:cf}
+	\begin{aligned}
+	J(W)&=\frac{1}{n}\sum_{i=1}^{n}C(X^{i})\\
+		&=-\frac{1}{n}\sum_{i=1}^{n}[Y^{i}\log{(H(X^{i}))}+(1-Y^{i})\log{(1-H(X^{i}))}]
+	\end{aligned}
+\end{equation}
+
+The partial derivative of $J(W)$ with respect to $W_{j}$ is given as follows:
+
+\begin{align*}
+	&\frac{\partial{J(W)}}{\partial{W_{j}}}\\
+	&=\frac{1}{n}\sum_{i=1}^{n}\frac{\partial{C(X^{i})}}{\partial{W_{j}}}\\
+	&=\frac{1}{n}\sum_{i=1}^{n}[\frac{\partial{Y^{i}\log{(H(X^{i}))}}}{\partial{W_{j}}}+\frac{\partial{(1-Y^{i})\log{(1-H(X^{i}))}}}{\partial{W_{j}}}]
+\end{align*}
+
+For simplicity, we calculate the equation separately:
+
+\begin{align*}
+	&\frac{\partial{Y^{i}\log{(H(X^{i}))}}}{\partial{W_{j}}}\\
+	&=Y^{i}\frac{\partial{\log{(H(X^{i}))}}}{\partial{H(X^{i})}}\cdot \frac{\partial{H(X^{i})}}{\partial{(-Z^{i})}}\cdot \frac{\partial{(-Z^{i})}}{\partial{W_{j}}}\\
+	&=Y^{i}\frac{1}{H(X^{i})}\cdot H(X^{i})(1-H(X^{i}))\cdot (-X^{i}_{j})\\
+	&=-Y^{i}(1-H(X^{i}))X^{i}_{j}\\
+	\\
+	&\frac{\partial{(1-Y^{i})\log{(1-H(X^{i}))}}}{\partial{W_{j}}}\\
+	&=(1-Y^{i})\frac{\partial{\log{(1-H(X^{i}))}}}{\partial{(1-H(X^{i}))}}\cdot \frac{\partial{(1-H(X^{i}))}}{\partial{H(X^{i})}} \cdot \frac{\partial{H(X^{i})}}{\partial{(-Z^{i})}}\cdot \frac{\partial{(-Z^{i})}}{\partial{W_{j}}}\\
+	&=(1-Y^{i})\frac{1}{1-H(X^{i})}\cdot (-1)\cdot H(X^{i})(1-H(X^{i}))\cdot (-X^{i}_{j})\\
+	&=(1-Y^{i})H(X^{i})X^{i}_{j}
+\end{align*}
+
+\begin{align*}
+	\therefore~
+	\frac{\partial{J(W)}}{\partial{W_{j}}}
+	&=\frac{1}{n}\sum_{i=1}^{n}[-Y^{i}(1-H(X^{i}))X^{i}_{j}+(1-Y^{i})H(X^{i})X^{i}_{j}]\\
+	&=\frac{1}{n}\sum_{i=1}^{n}(H(X^{i})-Y^{i})X^{i}_{j}
+\end{align*}
+
+Thus, for all $W_{j}$, the update function is given as follows:
+
+\begin{align*}
+	W_{j}=W_{j}-\frac{\lambda}{n}\sum_{i=1}^{n}(H(X^{i})-Y^{i})X^{i}_{j}
+\end{align*}
+where $\lambda$ is the learning rate given by users.
+
+\end{document}

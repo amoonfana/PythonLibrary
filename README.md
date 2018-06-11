@@ -11,3 +11,6 @@
 	*LinearRegression
 	Linear regression
 	
+	*LogisticRegression
+	Logistic regression
+	
