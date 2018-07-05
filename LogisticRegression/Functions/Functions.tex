@@ -22,7 +22,9 @@
 
 \maketitle
 
-Given a data set $X=\{X^{i}_{j}|X^{i}_{j}\in \mathbb{R}^{n\times (m-1)}\}$ and a label set $Y=\{Y^{i}|Y^{i}\in \mathbb{R}^{n\times 1}\}$, where $1\leq i\leq n$ and $2\leq j \leq m$. For all $X^{i}$, insert $X^{i}_{1}=1$ so that $X^{i}_{j}\in \mathbb{R}^{n\times m}$. Initialize weight matrix $W=\{W_{j}|W_{j}\in \mathbb{R}^{1\times m}\}$.
+\section{Logistic Regression}
+
+Given a data set $X\in \mathbb{R}^{n\times (m-1)}$ and a label set $Y\in \mathbb{R}^{n\times 1}$. Let two indices $i$ and $j$ be subject to $1\leq i\leq n$ and $2\leq j \leq m$ respectively. Thus, a data value is denoted as $X^{i}_{j}$ and a label value is denoted as $Y^{i}$. For all $X^{i}$, insert $X^{i}_{1}=1$ so that $X\in \mathbb{R}^{n\times m}$ and $1\leq j \leq m$. Initialize weight matrix $W\in \mathbb{R}^{1\times m}$ and thus a weight value is denoted as $W_{j}$.
 
 We define the linear function in Equation \eqref{eq:lnf}.
 
@@ -67,28 +69,52 @@ For simplicity, we calculate the equation separately:
 
 \begin{align*}
 	&\frac{\partial{Y^{i}\log{(H(X^{i}))}}}{\partial{W_{j}}}\\
-	&=Y^{i}\frac{\partial{\log{(H(X^{i}))}}}{\partial{H(X^{i})}}\cdot \frac{\partial{H(X^{i})}}{\partial{(-Z^{i})}}\cdot \frac{\partial{(-Z^{i})}}{\partial{W_{j}}}\\
-	&=Y^{i}\frac{1}{H(X^{i})}\cdot H(X^{i})(1-H(X^{i}))\cdot (-X^{i}_{j})\\
-	&=-Y^{i}(1-H(X^{i}))X^{i}_{j}\\
+	&=Y^{i}\frac{\partial{\log{(H(X^{i}))}}}{\partial{H(X^{i})}}\cdot \frac{\partial{H(X^{i})}}{\partial{(Z^{i})}}\cdot \frac{\partial{(Z^{i})}}{\partial{W_{j}}}\\
+	&=Y^{i}\frac{1}{H(X^{i})}\cdot H(X^{i})(1-H(X^{i}))\cdot X^{i}_{j}\\
+	&=Y^{i}(1-H(X^{i}))X^{i}_{j}\\
 	\\
 	&\frac{\partial{(1-Y^{i})\log{(1-H(X^{i}))}}}{\partial{W_{j}}}\\
-	&=(1-Y^{i})\frac{\partial{\log{(1-H(X^{i}))}}}{\partial{(1-H(X^{i}))}}\cdot \frac{\partial{(1-H(X^{i}))}}{\partial{H(X^{i})}} \cdot \frac{\partial{H(X^{i})}}{\partial{(-Z^{i})}}\cdot \frac{\partial{(-Z^{i})}}{\partial{W_{j}}}\\
-	&=(1-Y^{i})\frac{1}{1-H(X^{i})}\cdot (-1)\cdot H(X^{i})(1-H(X^{i}))\cdot (-X^{i}_{j})\\
-	&=(1-Y^{i})H(X^{i})X^{i}_{j}
+	&=(1-Y^{i})\frac{\partial{\log{(1-H(X^{i}))}}}{\partial{(1-H(X^{i}))}}\cdot \frac{\partial{(1-H(X^{i}))}}{\partial{H(X^{i})}} \cdot \frac{\partial{H(X^{i})}}{\partial{(Z^{i})}}\cdot \frac{\partial{(Z^{i})}}{\partial{W_{j}}}\\
+	&=(1-Y^{i})\frac{1}{1-H(X^{i})}\cdot (-1)\cdot H(X^{i})(1-H(X^{i}))\cdot (X^{i}_{j})\\
+	&=(Y^{i}-1)H(X^{i})X^{i}_{j}
 \end{align*}
 
 \begin{align*}
 	\therefore~
 	\frac{\partial{J(W)}}{\partial{W_{j}}}
-	&=\frac{1}{n}\sum_{i=1}^{n}[-Y^{i}(1-H(X^{i}))X^{i}_{j}+(1-Y^{i})H(X^{i})X^{i}_{j}]\\
+	&=-\frac{1}{n}\sum_{i=1}^{n}[Y^{i}(1-H(X^{i}))X^{i}_{j}+(Y^{i}-1)H(X^{i})X^{i}_{j}]\\
 	&=\frac{1}{n}\sum_{i=1}^{n}(H(X^{i})-Y^{i})X^{i}_{j}
 \end{align*}
 
 Thus, for all $W_{j}$, the update function is given as follows:
 
 \begin{align*}
-	W_{j}=W_{j}-\frac{\lambda}{n}\sum_{i=1}^{n}(H(X^{i})-Y^{i})X^{i}_{j}
+	W_{j}=W_{j}-\frac{\gamma}{n}\sum_{i=1}^{n}(H(X^{i})-Y^{i})X^{i}_{j}
 \end{align*}
-where $\lambda$ is the learning rate given by users.
+where $\gamma$ is the learning rate given by users.
+
+\section{Regularized Logistic Regression}
+The cost function of regularized logistic regression is given in Equation \eqref{eq:rcf}.
+
+\begin{equation}
+\label{eq:rcf}
+	J(W)=\frac{1}{n}\sum_{i=1}^{n}C(X^{i})+\frac{\lambda}{2n}\sum_{j=1}^{m}(W_{j})^{2}
+\end{equation}
+where $\lambda$ is the regularization ratio set by users.
+
+The partial derivative of $J(W)$ with respect to $W_{j}$ is given as follows:
+
+\begin{align*}
+	\frac{\partial{J(W)}}{\partial{W_{j}}}
+	&=\frac{1}{n}\sum_{i=1}^{n}\frac{\partial{C(X^{i})}}{\partial{W_{j}}}+\frac{\lambda}{2n}\frac{\partial{\sum_{j=1}^{m}(W_{j})^{2}}}{\partial{W_{j}}}\\
+	&=\frac{1}{n}\sum_{i=1}^{n}(H(X^{i})-Y^{i})X^{i}_{j}+\frac{\lambda}{n}W_{j}
+\end{align*}
+
+However, we do not want to regularize the weight of the constant factor $W_{1}$. Thus, for all $W_{j}$, the update function is given as follows:
+
+\begin{align*}
+	W_{j}&=W_{j}-\frac{\gamma}{n}\sum_{i=1}^{n}(H(X^{i})-Y^{i})X^{i}_{j}~&(for~j=0)\\
+	W_{j}&=W_{j}-\frac{\gamma}{n}[\sum_{i=1}^{n}(H(X^{i})-Y^{i})X^{i}_{j}+\lambda W_{j}]~&(for~j>1)
+\end{align*}
 
 \end{document}
