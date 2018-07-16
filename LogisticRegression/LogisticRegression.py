@@ -1,30 +1,9 @@
 # -*- coding: utf-8 -*-
 import numpy as np
-import scipy.optimize as opt
 import matplotlib.pyplot as plt
 
 def sigmoid(Z):
       return 1.0/(1.0+np.exp(-Z));
-
-##For bfgs optimization
-#def cost(W, X, Y, pnt, n):
-#      W1 = W.copy();
-#      W1[0] = 0;
-#      
-#      S = sigmoid(np.dot(X, W));
-#      j = -(np.dot(Y.T, np.log(S)) + np.dot((1-Y).T, np.log(1-S)) + np.dot(W1.T, W)*pnt/2) / n;
-#           
-#      return j;
-#
-##For bfgs optimization
-#def gradient(W, X, Y, pnt, n):
-#      W1 = W.copy();
-#      W1[0] = 0;
-#      
-#      S = sigmoid(np.dot(X, W));
-#      G = (np.dot(X.T, S - Y) + pnt*W1) / n;
-#      
-#      return G;
 
 def regularized_cost_gradient(W, X, Y, pnt, n):
       W1 = W.copy();
@@ -58,7 +37,6 @@ lr = 0.001;
 pnt = 0.1;
 
 (W,J) = gradientDescent(W, X, Y, pnt, lr, iterations);
-#W = opt.fmin_bfgs(cost, W, fprime=gradient, args=(X,Y,pnt,np.size(Y)));
 
 #Draw figure
 plt.figure();
