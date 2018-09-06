@@ -1,34 +1,32 @@
-\documentclass{sig-alternate}
-\usepackage{subfigure,algorithm,algorithmicx,algpseudocode}
+\documentclass[conference]{IEEEtran}
+\usepackage{amsfonts,amsmath,graphicx,subfigure,algorithm,algorithmicx}
+\usepackage[noend]{algpseudocode}
 
 \renewcommand{\algorithmicrequire}{\textbf{Input:}}
 \renewcommand{\algorithmicensure}{\textbf{Output:}}
+
+\hyphenation{op-tical net-works semi-conduc-tor}
 
 \begin{document}
 
 \title{Functions of Linear Regression}
 
-\numberofauthors{1}
 \author{
-	% 1st. author
-	\alignauthor
-	Xueyuan Gong\\
-	\affaddr{Department of Computer and Information Science}\\
-	\affaddr{Faculty of Science and Technology}\\
-    \affaddr{University of Macau}\\
-    \affaddr{Macau, China}\\
-    \email{\{yb47453\}@umac.mo}
+	\IEEEauthorblockN{Xueyuan Gong}
+	\IEEEauthorblockA{Department of Computer and Information Science\\University of Macau\\Macau, China\\\{yb474530\}@umac.mo}
 }
 
 \maketitle
 
-Given a data set $X\in \mathbb{R}^{n\times (m-1)}$ and a label set $Y\in \mathbb{R}^{n\times 1}$. Let two indices $i$ and $j$ be subject to $1\leq i\leq n$ and $2\leq j \leq m$ respectively. Thus, a data value is denoted as $X^{i}_{j}$ and a label value is denoted as $Y^{i}$. For all $X^{i}$, insert $X^{i}_{1}=1$ so that $X\in \mathbb{R}^{n\times m}$ and $1\leq j \leq m$. Initialize weight matrix $W\in \mathbb{R}^{1\times m}$ and thus a weight value is denoted as $W_{j}$.
+\section{Linear Regression}
+
+Given a data set $X\in \mathbb{R}^{n\times m}$ and a label set $Y\in \mathbb{R}^{n\times 1}$. Let two indices $i$ and $j$ be subject to $1\leq i\leq n$ and $1\leq j \leq m$ respectively. Thus, a data value is denoted as $X^{i}_{j}$ and a label value is denoted as $Y^{i}$. Initialize weight matrix $W\in \mathbb{R}^{1\times m}$ and bias $b$, thus a weight value is denoted as $W_{j}$.
 
 Hypothesis function is defined in Equation \eqref{eq:hf}.
 
 \begin{equation}
 \label{eq:hf}
-	H(X^{i})=\sum_{j=1}^{m}W_{j}X^{i}_{j}
+	H(X^{i})=\sum_{j=1}^{m}W_{j}X^{i}_{j}+b
 \end{equation}
 
 Loss function is defined in Equation \eqref{eq:lf}.
@@ -44,7 +42,7 @@ Cost function is defined in Equation \eqref{eq:cf}.
 \label{eq:cf}
 	\begin{aligned}
 	J(W)&=\frac{1}{2n}\sum_{i=1}^{n}C^2(X^{i})\\
-		&=\frac{1}{2n}\sum_{i=1}^{n}(\sum_{j=1}^{m}W_{j}X^{i}_{j}-Y^{i})^{2}
+		&=\frac{1}{2n}\sum_{i=1}^{n}(\sum_{j=1}^{m}W_{j}X^{i}_{j}+b-Y^{i})^{2}
 	\end{aligned}
 \end{equation}
 

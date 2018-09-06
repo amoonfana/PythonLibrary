@@ -9,7 +9,7 @@
 
 \begin{document}
 
-\title{Functions of Logistic Regression}
+\title{Functions of Neural Network}
 
 \author{
 	\IEEEauthorblockN{Xueyuan Gong}
@@ -18,9 +18,13 @@
 
 \maketitle
 
-\section{Logistic Regression}
+\section{Neural Network}
 
-Given a data set $X\in \mathbb{R}^{n\times m}$ and a label set $Y\in \mathbb{R}^{n\times 1}$. Let two indices $i$ and $j$ be subject to $1\leq i\leq n$ and $1\leq j \leq m$ respectively. Thus, a data value is denoted as $X^{i}_{j}$ and a label value is denoted as $Y^{i}$. Initialize weight matrix $W\in \mathbb{R}^{1\times m}$ and bias $b$, thus a weight value is denoted as $W_{j}$.
+Given a data set $X\in \mathbb{R}^{n\times m_{0}}$ and a label set $Y\in \mathbb{R}^{n\times 1}$. Thus, a data value is denoted as $X^{i}_{j}$ and a label value is denoted as $Y^{i}$. Let two indices $i$ and $j$ be subject to $1\leq i\leq n$ and $1\leq j \leq m$ respectively.
+
+Suppose the network has $l$ layers, where the size of each layer $L_{k}$ is denoted as $m_{k}$. Note the input/first layer $L_{1}$ accepts $X^{i}\in \mathbb{R}^{1\times m_{0}}$ as input data. Initialize weight matrix list $W$ and bias list $b$ containing $l-1$ matrices and biases respectively, where each matrix $W^{z}\in \mathbb{R}^{m_{k}\times m_{k+1}}$ and each bias $b^{z}\in \mathbb{R}^{1\times m_{k+1}}$
+
+ and biases $b$, thus a weight value is denoted as $W_{j}$.
 
 We define the linear function in Equation \eqref{eq:lnf}.
 
